@@ -2,24 +2,21 @@
 // in ditonton/test/presentation/pages/series_detail_page_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i12;
-import 'dart:ui' as _i13;
+import 'dart:async' as _i11;
+import 'dart:ui' as _i12;
 
-import 'package:ditonton/common/state_enum.dart' as _i10;
-import 'package:ditonton/domain/entities/series.dart' as _i11;
+import 'package:ditonton/common/state_enum.dart' as _i9;
+import 'package:ditonton/domain/entities/series.dart' as _i10;
 import 'package:ditonton/domain/entities/series_detail.dart' as _i7;
 import 'package:ditonton/domain/usecases/get_series_detail.dart' as _i2;
 import 'package:ditonton/domain/usecases/get_series_recommendations.dart'
     as _i3;
-import 'package:ditonton/domain/usecases/get_watchlist_series.dart' as _i8;
 import 'package:ditonton/domain/usecases/get_watchlist_status_series.dart'
     as _i4;
 import 'package:ditonton/domain/usecases/remove_watchlist_series.dart' as _i6;
 import 'package:ditonton/domain/usecases/save_watchlist_series.dart' as _i5;
 import 'package:ditonton/presentation/provider/series_detail_notifier.dart'
-    as _i9;
-import 'package:ditonton/presentation/provider/watchlist_series_notifier.dart'
-    as _i14;
+    as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -47,14 +44,11 @@ class _FakeRemoveWatchlistSeries_4 extends _i1.Fake
 
 class _FakeSeriesDetail_5 extends _i1.Fake implements _i7.SeriesDetail {}
 
-class _FakeGetWatchlistSeries_6 extends _i1.Fake
-    implements _i8.GetWatchlistSeries {}
-
 /// A class which mocks [SeriesDetailNotifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSeriesDetailNotifier extends _i1.Mock
-    implements _i9.SeriesDetailNotifier {
+    implements _i8.SeriesDetailNotifier {
   MockSeriesDetailNotifier() {
     _i1.throwOnMissingStub(this);
   }
@@ -86,17 +80,17 @@ class MockSeriesDetailNotifier extends _i1.Mock
   _i7.SeriesDetail get series => (super.noSuchMethod(Invocation.getter(#series),
       returnValue: _FakeSeriesDetail_5()) as _i7.SeriesDetail);
   @override
-  _i10.RequestState get seriesState =>
+  _i9.RequestState get seriesState =>
       (super.noSuchMethod(Invocation.getter(#seriesState),
-          returnValue: _i10.RequestState.Empty) as _i10.RequestState);
+          returnValue: _i9.RequestState.Empty) as _i9.RequestState);
   @override
-  List<_i11.Series> get seriesRecommendations =>
+  List<_i10.Series> get seriesRecommendations =>
       (super.noSuchMethod(Invocation.getter(#seriesRecommendations),
-          returnValue: <_i11.Series>[]) as List<_i11.Series>);
+          returnValue: <_i10.Series>[]) as List<_i10.Series>);
   @override
-  _i10.RequestState get recommendationState =>
+  _i9.RequestState get recommendationState =>
       (super.noSuchMethod(Invocation.getter(#recommendationState),
-          returnValue: _i10.RequestState.Empty) as _i10.RequestState);
+          returnValue: _i9.RequestState.Empty) as _i9.RequestState);
   @override
   String get message =>
       (super.noSuchMethod(Invocation.getter(#message), returnValue: '')
@@ -114,86 +108,33 @@ class MockSeriesDetailNotifier extends _i1.Mock
       (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
           as bool);
   @override
-  _i12.Future<void> fetchSeriesDetail(int? id) => (super.noSuchMethod(
+  _i11.Future<void> fetchSeriesDetail(int? id) => (super.noSuchMethod(
       Invocation.method(#fetchSeriesDetail, [id]),
       returnValue: Future<void>.value(),
-      returnValueForMissingStub: Future<void>.value()) as _i12.Future<void>);
+      returnValueForMissingStub: Future<void>.value()) as _i11.Future<void>);
   @override
-  _i12.Future<void> addWatchlist(_i7.SeriesDetail? series) =>
+  _i11.Future<void> addWatchlist(_i7.SeriesDetail? series) =>
       (super.noSuchMethod(Invocation.method(#addWatchlist, [series]),
               returnValue: Future<void>.value(),
               returnValueForMissingStub: Future<void>.value())
-          as _i12.Future<void>);
+          as _i11.Future<void>);
   @override
-  _i12.Future<void> removeFromWatchlist(_i7.SeriesDetail? series) =>
+  _i11.Future<void> removeFromWatchlist(_i7.SeriesDetail? series) =>
       (super.noSuchMethod(Invocation.method(#removeFromWatchlist, [series]),
               returnValue: Future<void>.value(),
               returnValueForMissingStub: Future<void>.value())
-          as _i12.Future<void>);
+          as _i11.Future<void>);
   @override
-  _i12.Future<void> loadWatchlistStatus(int? id) => (super.noSuchMethod(
+  _i11.Future<void> loadWatchlistStatus(int? id) => (super.noSuchMethod(
       Invocation.method(#loadWatchlistStatus, [id]),
       returnValue: Future<void>.value(),
-      returnValueForMissingStub: Future<void>.value()) as _i12.Future<void>);
+      returnValueForMissingStub: Future<void>.value()) as _i11.Future<void>);
   @override
-  void addListener(_i13.VoidCallback? listener) =>
+  void addListener(_i12.VoidCallback? listener) =>
       super.noSuchMethod(Invocation.method(#addListener, [listener]),
           returnValueForMissingStub: null);
   @override
-  void removeListener(_i13.VoidCallback? listener) =>
-      super.noSuchMethod(Invocation.method(#removeListener, [listener]),
-          returnValueForMissingStub: null);
-  @override
-  void dispose() => super.noSuchMethod(Invocation.method(#dispose, []),
-      returnValueForMissingStub: null);
-  @override
-  void notifyListeners() =>
-      super.noSuchMethod(Invocation.method(#notifyListeners, []),
-          returnValueForMissingStub: null);
-  @override
-  String toString() => super.toString();
-}
-
-/// A class which mocks [WatchlistSeriesNotifier].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockWatchlistSeriesNotifier extends _i1.Mock
-    implements _i14.WatchlistSeriesNotifier {
-  MockWatchlistSeriesNotifier() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i8.GetWatchlistSeries get getWatchlistSeries =>
-      (super.noSuchMethod(Invocation.getter(#getWatchlistSeries),
-          returnValue: _FakeGetWatchlistSeries_6()) as _i8.GetWatchlistSeries);
-  @override
-  List<_i11.Series> get watchlistSeries =>
-      (super.noSuchMethod(Invocation.getter(#watchlistSeries),
-          returnValue: <_i11.Series>[]) as List<_i11.Series>);
-  @override
-  _i10.RequestState get watchlistState =>
-      (super.noSuchMethod(Invocation.getter(#watchlistState),
-          returnValue: _i10.RequestState.Empty) as _i10.RequestState);
-  @override
-  String get message =>
-      (super.noSuchMethod(Invocation.getter(#message), returnValue: '')
-          as String);
-  @override
-  bool get hasListeners =>
-      (super.noSuchMethod(Invocation.getter(#hasListeners), returnValue: false)
-          as bool);
-  @override
-  _i12.Future<void> fetchWatchlistSeries() => (super.noSuchMethod(
-      Invocation.method(#fetchWatchlistSeries, []),
-      returnValue: Future<void>.value(),
-      returnValueForMissingStub: Future<void>.value()) as _i12.Future<void>);
-  @override
-  void addListener(_i13.VoidCallback? listener) =>
-      super.noSuchMethod(Invocation.method(#addListener, [listener]),
-          returnValueForMissingStub: null);
-  @override
-  void removeListener(_i13.VoidCallback? listener) =>
+  void removeListener(_i12.VoidCallback? listener) =>
       super.noSuchMethod(Invocation.method(#removeListener, [listener]),
           returnValueForMissingStub: null);
   @override
