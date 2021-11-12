@@ -1,4 +1,5 @@
 import 'package:ditonton/bloc/search_movies_bloc.dart';
+import 'package:ditonton/bloc/search_series_bloc.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
@@ -123,6 +124,11 @@ void init() {
   // bloc
   locator.registerFactory(
     () => SearchMoviesBloc(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => SearchSeriesBloc(
       locator(),
     ),
   );

@@ -29,6 +29,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:ditonton/bloc/search_movies_bloc.dart';
+import 'package:ditonton/bloc/search_series_bloc.dart';
 
 void main() {
   di.init();
@@ -78,6 +79,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<SearchMoviesBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<SearchSeriesBloc>(),
         ),
       ],
       child: MaterialApp(
