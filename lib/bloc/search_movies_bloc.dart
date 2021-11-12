@@ -2,6 +2,7 @@ import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/usecases/search_movies.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'search_movies_event.dart';
 part 'search_movies_state.dart';
@@ -10,6 +11,14 @@ class SearchMoviesBloc extends Bloc<SearchMoviesEvent, SearchMoviesState> {
   final SearchMovies _searchMovies;
 
   SearchMoviesBloc(this._searchMovies) : super(SearchEmpty());
+
+  @override
+  Stream<Transition<SearchMoviesEvent, SearchMoviesState>> transformEvents(
+    Stream<SearchMoviesEvent> events,
+    transitionFn,
+  ) {
+    return events.debounceTime(const Duration(milliseconds: 1000)).switchMap(transitionFn);
+  }
 
   @override
   Stream<SearchMoviesState> mapEventToState(

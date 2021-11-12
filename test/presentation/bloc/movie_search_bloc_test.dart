@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
+import 'package:ditonton/bloc/search_movies_bloc.dart';
 import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/usecases/search_movies.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../bloc/search_movies_bloc.dart';
 import '../provider/movie_search_notifier_test.mocks.dart';
 
 @GenerateMocks([SearchMovies])
@@ -50,7 +50,7 @@ void main() {
       return searchMoviesBloc;
     },
     act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
-    wait: const Duration(milliseconds: 100),
+    wait: const Duration(milliseconds: 1000),
     expect: () => [
       SearchLoading(),
       SearchHasData(tMovieList),
@@ -68,6 +68,7 @@ void main() {
       return searchMoviesBloc;
     },
     act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
+    wait: const Duration(milliseconds: 1000),
     expect: () => [
       SearchLoading(),
       SearchError('Server Failure'),
