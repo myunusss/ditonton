@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ditonton/bloc/movie_detail_bloc_cubit.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/genre.dart';
-import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -24,32 +23,33 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      Provider.of<MovieDetailNotifier>(context, listen: false).fetchMovieDetail(widget.id);
-      Provider.of<MovieDetailNotifier>(context, listen: false).loadWatchlistStatus(widget.id);
-    });
+    context.read<MovieDetailBlocCubit>().fetchMovieDetail(widget.id);
+    context.read<MovieDetailBlocCubit>().getWatchlistStatus(widget.id);
+    // Future.microtask(() {
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<MovieDetailNotifier>(
-        builder: (context, provider, child) {
-          if (provider.movieState == RequestState.Loading) {
+      body: BlocBuilder<MovieDetailBlocCubit, MovieDetailState>(
+        buildWhen: (previous, current) => previous != current,
+        builder: (context, state) {
+          if (state.detailLoading) {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (provider.movieState == RequestState.Loaded) {
-            final movie = provider.movie;
+          } else if (!state.detailLoading && state.movieDetail != null) {
+            final movieDetail = state.movieDetail;
             return SafeArea(
-              child: DetailContent(
-                movie,
-                provider.movieRecommendations,
-                provider.isAddedToWatchlist,
-              ),
+              child: DetailContent(movieDetail!),
+            );
+          } else if (state.message != null) {
+            return Center(
+              child: Text(state.message!),
             );
           } else {
-            return Text(provider.message);
+            return Container();
           }
         },
       ),
@@ -59,10 +59,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
 class DetailContent extends StatelessWidget {
   final MovieDetail movie;
-  final List<Movie> recommendations;
-  final bool isAddedWatchlist;
 
-  DetailContent(this.movie, this.recommendations, this.isAddedWatchlist);
+  DetailContent(this.movie);
+
+  showSimpleDialog(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,41 +106,44 @@ class DetailContent extends StatelessWidget {
                               movie.title,
                               style: kHeading5,
                             ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                if (!isAddedWatchlist) {
-                                  await Provider.of<MovieDetailNotifier>(context, listen: false)
-                                      .addWatchlist(movie);
-                                } else {
-                                  await Provider.of<MovieDetailNotifier>(context, listen: false)
-                                      .removeFromWatchlist(movie);
+                            BlocConsumer<MovieDetailBlocCubit, MovieDetailState>(
+                              listenWhen: (previous, current) =>
+                                  previous.savedMessage != current.savedMessage,
+                              listener: (context, state) {
+                                if (state.savedMessage != null) {
+                                  showSimpleDialog(
+                                    context,
+                                    state.savedMessage ?? 'No Message',
+                                  );
                                 }
 
-                                final message =
-                                    Provider.of<MovieDetailNotifier>(context, listen: false)
-                                        .watchlistMessage;
-
-                                if (message == MovieDetailNotifier.watchlistAddSuccessMessage ||
-                                    message == MovieDetailNotifier.watchlistRemoveSuccessMessage) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(content: Text(message)));
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Text(message),
-                                        );
-                                      });
+                                if (state.isErrorSave) {
+                                  showSimpleDialog(
+                                    context,
+                                    state.saveErrorMessage ?? 'No Message',
+                                  );
                                 }
                               },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  isAddedWatchlist ? Icon(Icons.check) : Icon(Icons.add),
-                                  Text('Watchlist'),
-                                ],
-                              ),
+                              builder: (context, state) {
+                                return ElevatedButton(
+                                  onPressed: () {
+                                    if (!state.isAddedToWatchlist) {
+                                      context.read<MovieDetailBlocCubit>().addWatchlist(movie);
+                                    } else {
+                                      context.read<MovieDetailBlocCubit>().deleteWatchlist(movie);
+                                    }
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      state.isAddedToWatchlist
+                                          ? const Icon(Icons.check)
+                                          : const Icon(Icons.add),
+                                      const Text('Watchlist'),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                             Text(
                               _showGenres(movie.genres),
@@ -173,21 +178,22 @@ class DetailContent extends StatelessWidget {
                               'Recommendations',
                               style: kHeading6,
                             ),
-                            Consumer<MovieDetailNotifier>(
-                              builder: (context, data, child) {
-                                if (data.recommendationState == RequestState.Loading) {
+                            BlocBuilder<MovieDetailBlocCubit, MovieDetailState>(
+                              builder: (context, state) {
+                                if (state.recommendationLoading) {
                                   return Center(
                                     child: CircularProgressIndicator(),
                                   );
-                                } else if (data.recommendationState == RequestState.Error) {
-                                  return Text(data.message);
-                                } else if (data.recommendationState == RequestState.Loaded) {
+                                } else if (state.message != null) {
+                                  return Text(state.message!);
+                                } else if (!state.recommendationLoading &&
+                                    state.movieRecommendations != null) {
                                   return Container(
                                     height: 150,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context, index) {
-                                        final movie = recommendations[index];
+                                        final movie = state.movieRecommendations![index];
                                         return Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: InkWell(
@@ -215,7 +221,7 @@ class DetailContent extends StatelessWidget {
                                           ),
                                         );
                                       },
-                                      itemCount: recommendations.length,
+                                      itemCount: state.movieRecommendations!.length,
                                     ),
                                   );
                                 } else {
