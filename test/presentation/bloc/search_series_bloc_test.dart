@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../provider/series_search_notifier_test.mocks.dart';
+import 'search_series_bloc_test.mocks.dart';
 
 @GenerateMocks([SearchSeries])
 void main() {

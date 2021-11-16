@@ -34,6 +34,8 @@ import 'package:ditonton/bloc/movie_detail_bloc_cubit.dart';
 import 'package:ditonton/bloc/series_detail_bloc_cubit.dart';
 import 'package:ditonton/bloc/popular_movies_bloc_cubit.dart';
 import 'package:ditonton/bloc/popular_series_bloc_cubit.dart';
+import 'package:ditonton/bloc/top_rated_series_bloc_cubit.dart';
+import 'package:ditonton/bloc/top_rated_movies_bloc_cubit.dart';
 
 void main() {
   di.init();
@@ -98,6 +100,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<PopularSeriesBlocCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedMoviesBlocCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedSeriesBlocCubit>(),
         ),
       ],
       child: MaterialApp(

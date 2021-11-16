@@ -1,7 +1,7 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/provider/top_rated_series_notifier.dart';
+import 'package:ditonton/bloc/top_rated_series_bloc_cubit.dart';
 import 'package:ditonton/presentation/widgets/series_card_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class TopRatedSeriesPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class _TopRatedSeriesPageState extends State<TopRatedSeriesPage> {
   }
 
   updateList() {
-    Provider.of<TopRatedSeriesNotifier>(context, listen: false).fetchTopRatedSeries();
+    context.read<TopRatedSeriesBlocCubit>().fetchTopRatedSeries();
   }
 
   @override
@@ -30,25 +30,28 @@ class _TopRatedSeriesPageState extends State<TopRatedSeriesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TopRatedSeriesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<TopRatedSeriesBlocCubit, TopRatedSeriesState>(
+          buildWhen: (previous, current) => previous != current,
+          builder: (context, state) {
+            if (state.topRatedLoading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
+            } else if (!state.topRatedLoading && state.topRatedSeries != null) {
+              final series = state.topRatedSeries;
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final series = data.series[index];
-                  return SeriesCard(series, () => updateList());
+                  final serie = series![index];
+                  return SeriesCard(serie, () => updateList());
                 },
-                itemCount: data.series.length,
+                itemCount: series!.length,
+              );
+            } else if (state.message != null) {
+              return Center(
+                child: Text(state.message!),
               );
             } else {
-              return Center(
-                key: Key('error_message'),
-                child: Text(data.message),
-              );
+              return Container();
             }
           },
         ),
