@@ -1,4 +1,6 @@
 import 'package:ditonton/bloc/movie_detail_bloc_cubit.dart';
+import 'package:ditonton/bloc/popular_movies_bloc_cubit.dart';
+import 'package:ditonton/bloc/popular_series_bloc_cubit.dart';
 import 'package:ditonton/bloc/search_movies_bloc.dart';
 import 'package:ditonton/bloc/search_series_bloc.dart';
 import 'package:ditonton/bloc/series_detail_bloc_cubit.dart';
@@ -149,6 +151,16 @@ void init() {
       locator(),
       locator(),
       locator(),
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => PopularMoviesBlocCubit(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => PopularSeriesBlocCubit(
       locator(),
     ),
   );
