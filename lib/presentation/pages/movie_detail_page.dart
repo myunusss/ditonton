@@ -25,8 +25,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
     super.initState();
     context.read<MovieDetailBlocCubit>().fetchMovieDetail(widget.id);
     context.read<MovieDetailBlocCubit>().getWatchlistStatus(widget.id);
-    // Future.microtask(() {
-    // });
   }
 
   @override
