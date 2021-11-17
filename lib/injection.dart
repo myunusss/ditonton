@@ -1,11 +1,14 @@
 import 'package:ditonton/bloc/movie_detail_bloc_cubit.dart';
+import 'package:ditonton/bloc/movie_list_bloc_cubit.dart';
 import 'package:ditonton/bloc/popular_movies_bloc_cubit.dart';
 import 'package:ditonton/bloc/popular_series_bloc_cubit.dart';
 import 'package:ditonton/bloc/search_movies_bloc.dart';
 import 'package:ditonton/bloc/search_series_bloc.dart';
 import 'package:ditonton/bloc/series_detail_bloc_cubit.dart';
+import 'package:ditonton/bloc/series_list_bloc_cubit.dart';
 import 'package:ditonton/bloc/top_rated_movies_bloc_cubit.dart';
 import 'package:ditonton/bloc/top_rated_series_bloc_cubit.dart';
+import 'package:ditonton/bloc/watchlist_series_bloc_cubit.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
@@ -49,6 +52,8 @@ import 'package:ditonton/presentation/provider/series_list_notifier.dart';
 import 'package:ditonton/presentation/provider/watchlist_series_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
+
+import 'bloc/watchlist_movies_bloc_cubit.dart';
 
 final locator = GetIt.instance;
 
@@ -173,6 +178,30 @@ void init() {
   );
   locator.registerFactory(
     () => TopRatedSeriesBlocCubit(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => MovieListBlocCubit(
+      locator(),
+      locator(),
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => SeriesListBlocCubit(
+      locator(),
+      locator(),
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => WatchlistMoviesBlocCubit(
+      locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => WatchlistSeriesBlocCubit(
       locator(),
     ),
   );

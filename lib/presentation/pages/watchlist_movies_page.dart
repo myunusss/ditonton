@@ -1,7 +1,9 @@
+import 'package:ditonton/bloc/watchlist_movies_bloc_cubit.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class WatchlistMoviesPage extends StatefulWidget {
@@ -19,32 +21,34 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage> {
   }
 
   updateList() {
-    Provider.of<WatchlistMovieNotifier>(context, listen: false).fetchWatchlistMovies();
+    context.read<WatchlistMoviesBlocCubit>().fetchWatchlistMovies();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Consumer<WatchlistMovieNotifier>(
-        builder: (context, data, child) {
-          if (data.watchlistState == RequestState.Loading) {
+      child: BlocBuilder<WatchlistMoviesBlocCubit, WatchlistMoviesState>(
+        buildWhen: (previous, current) => previous != current,
+        builder: (context, state) {
+          if (state.watchlistLoading) {
             return Center(
               child: CircularProgressIndicator(),
             );
-          } else if (data.watchlistState == RequestState.Loaded) {
+          } else if (!state.watchlistLoading && state.watchlistMovies != null) {
             return ListView.builder(
               itemBuilder: (context, index) {
-                final movie = data.watchlistMovies[index];
+                final movie = state.watchlistMovies![index];
                 return MovieCard(movie, () => updateList());
               },
-              itemCount: data.watchlistMovies.length,
+              itemCount: state.watchlistMovies!.length,
+            );
+          } else if (state.message != null) {
+            return Center(
+              child: Text(state.message!),
             );
           } else {
-            return Center(
-              key: Key('error_message'),
-              child: Text(data.message),
-            );
+            return Container();
           }
         },
       ),
