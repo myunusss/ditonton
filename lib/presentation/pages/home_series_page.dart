@@ -58,12 +58,14 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
                 builder: (context, state) {
                   if (state.nowPlayingLoading) {
                     return Center(
+                      key: Key('loading-nowplaying'),
                       child: CircularProgressIndicator(),
                     );
                   } else if (!state.nowPlayingLoading && state.nowPlayingSeries != null) {
                     return SeriesList(state.nowPlayingSeries!);
                   } else if (state.nowPlayingMessage != null) {
                     return Center(
+                      key: Key('message-nowplaying'),
                       child: Text(state.nowPlayingMessage!),
                     );
                   } else {
@@ -80,12 +82,14 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
                 builder: (context, state) {
                   if (state.popularLoading) {
                     return Center(
+                      key: Key('loading-popular'),
                       child: CircularProgressIndicator(),
                     );
                   } else if (!state.popularLoading && state.popularSeries != null) {
                     return SeriesList(state.popularSeries!);
                   } else if (state.popularMessage != null) {
                     return Center(
+                      key: Key('message-popular'),
                       child: Text(state.popularMessage!),
                     );
                   } else {
@@ -102,12 +106,14 @@ class _HomeSeriesPageState extends State<HomeSeriesPage> {
                 builder: (context, state) {
                   if (state.topRatedLoading) {
                     return Center(
+                      key: Key('loading-toprated'),
                       child: CircularProgressIndicator(),
                     );
                   } else if (!state.topRatedLoading && state.topRatedSeries != null) {
                     return SeriesList(state.topRatedSeries!);
                   } else if (state.topRatedMessage != null) {
                     return Center(
+                      key: Key('message-toprated'),
                       child: Text(state.topRatedMessage!),
                     );
                   } else {

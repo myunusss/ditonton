@@ -8,13 +8,16 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        key: Key('stack'),
         children: [
           Column(
+            key: Key('column'),
             children: [
               Expanded(
                 child: Container(
                   color: kPrussianBlue,
                   child: Center(
+                    key: Key('center'),
                     child: Image.asset(
                       'assets/circle-g.png',
                       width: 128,

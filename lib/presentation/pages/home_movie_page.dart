@@ -34,6 +34,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
+        key: Key('main-drawer'),
         child: Column(
           children: [
             UserAccountsDrawerHeader(
@@ -44,6 +45,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               accountEmail: Text('ditonton@dicoding.com'),
             ),
             ListTile(
+              key: Key('movies'),
               leading: Icon(Icons.movie),
               title: Text('Movies'),
               onTap: () {
@@ -51,6 +53,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               },
             ),
             ListTile(
+              key: Key('series'),
               leading: Icon(Icons.tv),
               title: Text('TV Series'),
               onTap: () {
@@ -58,6 +61,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               },
             ),
             ListTile(
+              key: Key('watchlist'),
               leading: Icon(Icons.save_alt),
               title: Text('Watchlist'),
               onTap: () {
@@ -65,6 +69,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               },
             ),
             ListTile(
+              key: Key('about'),
               onTap: () {
                 Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
               },
@@ -100,12 +105,14 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 builder: (context, state) {
                   if (state.nowPlayingLoading) {
                     return Center(
+                      key: Key('loading-nowplaying'),
                       child: CircularProgressIndicator(),
                     );
                   } else if (!state.nowPlayingLoading && state.nowPlayingMovies != null) {
                     return MovieList(state.nowPlayingMovies!);
                   } else if (state.nowPlayingMessage != null) {
                     return Center(
+                      key: Key('message-nowplaying'),
                       child: Text(state.nowPlayingMessage!),
                     );
                   } else {
@@ -122,12 +129,14 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 builder: (context, state) {
                   if (state.popularLoading) {
                     return Center(
+                      key: Key('loading-popular'),
                       child: CircularProgressIndicator(),
                     );
                   } else if (!state.popularLoading && state.popularMovies != null) {
                     return MovieList(state.popularMovies!);
                   } else if (state.popularMessage != null) {
                     return Center(
+                      key: Key('message-popular'),
                       child: Text(state.popularMessage!),
                     );
                   } else {
@@ -144,12 +153,14 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 builder: (context, state) {
                   if (state.topRatedLoading) {
                     return Center(
+                      key: Key('loading-toprated'),
                       child: CircularProgressIndicator(),
                     );
                   } else if (!state.topRatedLoading && state.topRatedMovies != null) {
                     return MovieList(state.topRatedMovies!);
                   } else if (state.topRatedMessage != null) {
                     return Center(
+                      key: Key('message-toprated'),
                       child: Text(state.topRatedMessage!),
                     );
                   } else {
