@@ -28,6 +28,8 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ConnectionFailure('Certificated not valid\n${e.message}'));
     }
   }
 
@@ -40,6 +42,8 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ConnectionFailure('Certificated not valid\n${e.message}'));
     }
   }
 
@@ -52,6 +56,8 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ConnectionFailure('Certificated not valid\n${e.message}'));
     }
   }
 
@@ -64,6 +70,8 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ConnectionFailure('Certificated not valid\n${e.message}'));
     }
   }
 
@@ -76,6 +84,8 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ConnectionFailure('Certificated not valid\n${e.message}'));
     }
   }
 
@@ -88,14 +98,15 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ConnectionFailure('Certificated not valid\n${e.message}'));
     }
   }
 
   @override
   Future<Either<Failure, String>> saveWatchlist(MovieDetail movie) async {
     try {
-      final result =
-          await localDataSource.insertWatchlist(MovieTable.fromEntity(movie));
+      final result = await localDataSource.insertWatchlist(MovieTable.fromEntity(movie));
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
@@ -107,8 +118,7 @@ class MovieRepositoryImpl implements MovieRepository {
   @override
   Future<Either<Failure, String>> removeWatchlist(MovieDetail movie) async {
     try {
-      final result =
-          await localDataSource.removeWatchlist(MovieTable.fromEntity(movie));
+      final result = await localDataSource.removeWatchlist(MovieTable.fromEntity(movie));
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));

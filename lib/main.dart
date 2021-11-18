@@ -1,4 +1,5 @@
 import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/common/http_ssl_pinning.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_series_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
@@ -41,7 +42,9 @@ import 'package:ditonton/bloc/series_list_bloc_cubit.dart';
 import 'package:ditonton/bloc/watchlist_movies_bloc_cubit.dart';
 import 'package:ditonton/bloc/watchlist_series_bloc_cubit.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await HttpSSLPinning.init();
   di.init();
   runApp(MyApp());
 }
