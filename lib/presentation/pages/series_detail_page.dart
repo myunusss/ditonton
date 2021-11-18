@@ -35,6 +35,7 @@ class _SeriesDetailPageState extends State<SeriesDetailPage> {
         builder: (context, state) {
           if (state.detailLoading) {
             return Center(
+              key: Key('series_detail_loading'),
               child: CircularProgressIndicator(),
             );
           } else if (!state.detailLoading && state.seriesDetail != null) {

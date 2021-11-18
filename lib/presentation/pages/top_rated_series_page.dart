@@ -35,11 +35,13 @@ class _TopRatedSeriesPageState extends State<TopRatedSeriesPage> {
           builder: (context, state) {
             if (state.topRatedLoading) {
               return Center(
+                key: Key('loading'),
                 child: CircularProgressIndicator(),
               );
             } else if (!state.topRatedLoading && state.topRatedSeries != null) {
               final series = state.topRatedSeries;
               return ListView.builder(
+                key: Key('listview'),
                 itemBuilder: (context, index) {
                   final serie = series![index];
                   return SeriesCard(serie, () => updateList());
@@ -48,6 +50,7 @@ class _TopRatedSeriesPageState extends State<TopRatedSeriesPage> {
               );
             } else if (state.message != null) {
               return Center(
+                key: Key('message'),
                 child: Text(state.message!),
               );
             } else {

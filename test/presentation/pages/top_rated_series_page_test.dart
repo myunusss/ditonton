@@ -1,25 +1,24 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/series.dart';
+import 'package:ditonton/bloc/top_rated_series_bloc_cubit.dart';
 import 'package:ditonton/presentation/pages/top_rated_series_page.dart';
-import 'package:ditonton/presentation/provider/top_rated_series_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
 
+import '../../dummy_data/dummy_objects.dart';
 import 'top_rated_series_page_test.mocks.dart';
 
-@GenerateMocks([TopRatedSeriesNotifier])
+@GenerateMocks([TopRatedSeriesBlocCubit])
 void main() {
-  late MockTopRatedSeriesNotifier mockNotifier;
+  late MockTopRatedSeriesBlocCubit mockNotifier;
 
   setUp(() {
-    mockNotifier = MockTopRatedSeriesNotifier();
+    mockNotifier = MockTopRatedSeriesBlocCubit();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<TopRatedSeriesNotifier>.value(
+    return BlocProvider<TopRatedSeriesBlocCubit>.value(
       value: mockNotifier,
       child: MaterialApp(
         home: body,
@@ -27,37 +26,81 @@ void main() {
     );
   }
 
-  testWidgets('Page should display progress bar when loading', (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Loading);
+  testWidgets('Page should display center progress bar when loading', (WidgetTester tester) async {
+    when(mockNotifier.state).thenReturn(
+      TopRatedSeriesState(
+        message: null,
+        topRatedLoading: true,
+        topRatedSeries: null,
+      ),
+    );
 
-    final progressFinder = find.byType(CircularProgressIndicator);
-    final centerFinder = find.byType(Center);
+    when(mockNotifier.stream).thenAnswer(
+      (_) => Stream.value(
+        TopRatedSeriesState(
+          message: null,
+          topRatedLoading: true,
+          topRatedSeries: null,
+        ),
+      ),
+    );
+
+    final loadingWidget = find.byKey(Key('loading'));
 
     await tester.pumpWidget(_makeTestableWidget(TopRatedSeriesPage()));
 
-    expect(centerFinder, findsOneWidget);
-    expect(progressFinder, findsOneWidget);
+    expect(loadingWidget, findsOneWidget);
   });
 
-  testWidgets('Page should display when data is loaded', (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Loaded);
-    when(mockNotifier.series).thenReturn(<Series>[]);
+  testWidgets('Page should display message when something error', (WidgetTester tester) async {
+    when(mockNotifier.state).thenReturn(
+      TopRatedSeriesState(
+        message: 'Message',
+        topRatedLoading: false,
+        topRatedSeries: null,
+      ),
+    );
 
-    final listViewFinder = find.byType(ListView);
+    when(mockNotifier.stream).thenAnswer(
+      (_) => Stream.value(
+        TopRatedSeriesState(
+          message: 'Message',
+          topRatedLoading: false,
+          topRatedSeries: null,
+        ),
+      ),
+    );
+
+    final messageError = find.byKey(Key('message'));
 
     await tester.pumpWidget(_makeTestableWidget(TopRatedSeriesPage()));
 
-    expect(listViewFinder, findsOneWidget);
+    expect(messageError, findsOneWidget);
   });
 
-  testWidgets('Page should display text with message when Error', (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Error);
-    when(mockNotifier.message).thenReturn('Error message');
+  testWidgets('Page should display list Meries', (WidgetTester tester) async {
+    when(mockNotifier.state).thenReturn(
+      TopRatedSeriesState(
+        message: null,
+        topRatedLoading: false,
+        topRatedSeries: testSeriesList,
+      ),
+    );
 
-    final textFinder = find.byKey(Key('error_message'));
+    when(mockNotifier.stream).thenAnswer(
+      (_) => Stream.value(
+        TopRatedSeriesState(
+          message: null,
+          topRatedLoading: false,
+          topRatedSeries: testSeriesList,
+        ),
+      ),
+    );
+
+    final watchlistButton = find.byKey(Key('listview'));
 
     await tester.pumpWidget(_makeTestableWidget(TopRatedSeriesPage()));
 
-    expect(textFinder, findsOneWidget);
+    expect(watchlistButton, findsOneWidget);
   });
 }

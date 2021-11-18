@@ -35,11 +35,13 @@ class _PopularSeriesPageState extends State<PopularSeriesPage> {
           builder: (context, state) {
             if (state.popularLoading) {
               return Center(
+                key: Key('loading-popular'),
                 child: CircularProgressIndicator(),
               );
             } else if (!state.popularLoading && state.popularSeries != null) {
               final series = state.popularSeries;
               return ListView.builder(
+                key: Key('listview'),
                 itemBuilder: (context, index) {
                   final serie = series![index];
                   return SeriesCard(serie, () => updateList());
@@ -48,6 +50,7 @@ class _PopularSeriesPageState extends State<PopularSeriesPage> {
               );
             } else if (state.message != null) {
               return Center(
+                key: Key('message'),
                 child: Text(state.message!),
               );
             } else {

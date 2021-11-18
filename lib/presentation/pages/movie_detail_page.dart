@@ -35,6 +35,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
         builder: (context, state) {
           if (state.detailLoading) {
             return Center(
+              key: Key('movie_detail_loading'),
               child: CircularProgressIndicator(),
             );
           } else if (!state.detailLoading && state.movieDetail != null) {

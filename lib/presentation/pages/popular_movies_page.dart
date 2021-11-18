@@ -35,11 +35,13 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
           builder: (context, state) {
             if (state.popularLoading) {
               return Center(
+                key: Key('loading-popular'),
                 child: CircularProgressIndicator(),
               );
             } else if (!state.popularLoading && state.popularMovies != null) {
               final movies = state.popularMovies;
               return ListView.builder(
+                key: Key('listview'),
                 itemBuilder: (context, index) {
                   final movie = movies![index];
                   return MovieCard(movie, () => updateList());
@@ -48,10 +50,13 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
               );
             } else if (state.message != null) {
               return Center(
+                key: Key('message'),
                 child: Text(state.message!),
               );
             } else {
-              return Container();
+              return Container(
+                key: Key('container'),
+              );
             }
           },
         ),
