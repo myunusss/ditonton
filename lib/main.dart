@@ -24,6 +24,7 @@ import 'package:ditonton/presentation/provider/popular_series_notifier.dart';
 import 'package:ditonton/presentation/provider/top_rated_series_notifier.dart';
 import 'package:ditonton/presentation/provider/series_search_notifier.dart';
 import 'package:ditonton/presentation/provider/watchlist_series_notifier.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +46,7 @@ import 'package:ditonton/bloc/watchlist_series_bloc_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HttpSSLPinning.init();
+  await Firebase.initializeApp();
   di.init();
   runApp(MyApp());
 }
