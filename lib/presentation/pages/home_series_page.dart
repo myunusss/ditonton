@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:core/styles/text_styles.dart';
+import 'package:core/utils/constants.dart';
 import 'package:ditonton/bloc/series_list_bloc_cubit.dart';
-import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/presentation/pages/popular_series_page.dart';
 import 'package:ditonton/presentation/pages/search_series_page.dart';

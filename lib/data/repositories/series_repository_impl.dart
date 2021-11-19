@@ -1,10 +1,9 @@
 import 'dart:io';
 
+import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/data/datasources/series_local_data_source.dart';
 import 'package:ditonton/data/datasources/series_remote_data_source.dart';
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/data/models/series_table.dart';
 import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/domain/entities/series_detail.dart';

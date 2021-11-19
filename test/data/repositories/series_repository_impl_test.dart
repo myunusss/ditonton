@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:core/utils/exception.dart';
+import 'package:core/utils/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/data/models/genre_model.dart';
 import 'package:ditonton/data/models/series_detail_model.dart';
 import 'package:ditonton/data/models/series_model.dart';

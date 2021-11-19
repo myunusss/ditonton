@@ -176,6 +176,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  core:
+    dependency: "direct main"
+    description:
+      path: core
+      relative: true
+    source: path
+    version: "0.0.1"
   coverage:
     dependency: transitive
     description:
@@ -457,6 +464,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  movies:
+    dependency: "direct main"
+    description:
+      path: movies
+      relative: true
+    source: path
+    version: "0.0.1"
   nested:
     dependency: transitive
     description:

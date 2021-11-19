@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:ditonton/common/exception.dart';
+import 'package:core/utils/exception.dart';
 import 'package:ditonton/data/datasources/series_remote_data_source.dart';
 import 'package:ditonton/data/models/series_detail_model.dart';
 import 'package:ditonton/data/models/series_response.dart';

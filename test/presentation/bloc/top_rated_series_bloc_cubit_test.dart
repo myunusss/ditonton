@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:core/utils/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/bloc/top_rated_series_bloc_cubit.dart';
-import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/domain/usecases/get_top_rated_series.dart';
 import 'package:flutter_test/flutter_test.dart';

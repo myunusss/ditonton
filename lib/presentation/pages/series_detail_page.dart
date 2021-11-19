@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:core/styles/colors.dart';
+import 'package:core/styles/text_styles.dart';
 import 'package:ditonton/bloc/series_detail_bloc_cubit.dart';
-import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/series_detail.dart';
 import 'package:flutter/material.dart';

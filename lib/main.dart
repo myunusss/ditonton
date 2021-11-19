@@ -1,35 +1,27 @@
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/http_ssl_pinning.dart';
+import 'package:core/styles/colors.dart';
+import 'package:core/styles/text_styles.dart';
+import 'package:core/utils/http_ssl_pinning.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_series_page.dart';
-import 'package:ditonton/presentation/pages/movie_detail_page.dart';
-import 'package:ditonton/presentation/pages/home_movie_page.dart';
-import 'package:ditonton/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/pages/popular_series_page.dart';
-import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/search_series_page.dart';
 import 'package:ditonton/presentation/pages/series_detail_page.dart';
-import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_series_page.dart';
-import 'package:ditonton/presentation/pages/watchlist_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/movies.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
-import 'package:ditonton/bloc/search_movies_bloc.dart';
 import 'package:ditonton/bloc/search_series_bloc.dart';
-import 'package:ditonton/bloc/movie_detail_bloc_cubit.dart';
 import 'package:ditonton/bloc/series_detail_bloc_cubit.dart';
-import 'package:ditonton/bloc/popular_movies_bloc_cubit.dart';
 import 'package:ditonton/bloc/popular_series_bloc_cubit.dart';
 import 'package:ditonton/bloc/top_rated_series_bloc_cubit.dart';
-import 'package:ditonton/bloc/top_rated_movies_bloc_cubit.dart';
-import 'package:ditonton/bloc/movie_list_bloc_cubit.dart';
 import 'package:ditonton/bloc/series_list_bloc_cubit.dart';
-import 'package:ditonton/bloc/watchlist_movies_bloc_cubit.dart';
 import 'package:ditonton/bloc/watchlist_series_bloc_cubit.dart';
+
+import 'presentation/pages/watchlist_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

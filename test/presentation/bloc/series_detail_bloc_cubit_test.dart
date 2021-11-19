@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:core/utils/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/bloc/series_detail_bloc_cubit.dart';
-import 'package:ditonton/common/failure.dart';
 import 'package:ditonton/domain/entities/series.dart';
 import 'package:ditonton/domain/usecases/get_series_detail.dart';
 import 'package:ditonton/domain/usecases/get_series_recommendations.dart';

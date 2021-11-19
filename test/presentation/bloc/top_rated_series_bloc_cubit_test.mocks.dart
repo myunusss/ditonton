@@ -4,8 +4,8 @@
 
 import 'dart:async' as _i5;
 
+import 'package:core/utils/failure.dart' as _i6;
 import 'package:dartz/dartz.dart' as _i3;
-import 'package:ditonton/common/failure.dart' as _i6;
 import 'package:ditonton/domain/entities/series.dart' as _i7;
 import 'package:ditonton/domain/repositories/series_repository.dart' as _i2;
 import 'package:ditonton/domain/usecases/get_top_rated_series.dart' as _i4;
